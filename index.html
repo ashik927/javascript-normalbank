@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashik Bank</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+     <div id="login-area">
+        <h1 class="text-center">Welcome to Ashik Bank</h1>
+        <div class="submit-area">
+            <h4>Login</h4>
+            <input type="text" class="form-control" placeholder="Email">
+            <br>
+            <input type="password" class="form-control" placeholder="Password">
+            <br>
+            <button id="login" class="btn btn-success">Enter</button>
+        </div>
+    </div>
+
+    <div id="transaction-area">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="deposit status">
+                    <h5>Depoist</h5>
+                    <h2>$ <span  id="show">00</span> </h2>
+                </div>
+             </div>
+            <div class="col-md-4 ">
+                <div class="withdraw status">
+                    <h5>Withdraw</h5>
+                    <h2>$ <span id="currentWithdraw">00</span> </h2>
+                </div>
+                
+            </div>
+            <div class="col-md-4 ">
+                <div class="balance status">
+                    <h5>Balance</h5>
+                <h2>$ <span id="totalBalance" class="withdraw">1240</span> </h2>
+                </div>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="submit-area">
+                    <h4>Depoist</h4>
+               `    <input type="text" id="depositid" class="form-control">
+                    <br>
+                    <button id="addDeposit" class="btn btn-success">Depoist</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="submit-area">
+                    <h4>Withdraw</h4>
+                    <br>
+                    <input type="text" id="withdrawId" class="form-control">
+                    <br>
+                    <button id="withdrawBtn" class="btn btn-success">Withdraw</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        //clear
+        const loginBtn=document.getElementById("login");
+        loginBtn.addEventListener("click",function(){
+            const loginArea=document.getElementById("login-area")
+            loginArea.style.display="none";
+            const transactionArea=document.getElementById("transaction-area");
+            transactionArea.style.display="block";
+        })
+        //deposit amount
+        const deposit=document.getElementById("addDeposit");
+        deposit.addEventListener("click",function(){
+            const depositid=document.getElementById("depositid").value;
+            const parseValue1=parseFloat(depositid);
+
+            updateSpantext("show",parseValue1);
+           
+            document.getElementById("depositid").value="";
+            //balance
+            updateSpantext("totalBalance",parseValue1);
+        })
+        //withdraw
+
+        const withdrawBtn=document.getElementById("withdrawBtn");
+        withdrawBtn.addEventListener("click",function(){
+            if(parseFloat(document.getElementById("totalBalance").innerText) > parseFloat(document.getElementById("withdrawId").value)){
+            const withdrawId=document.getElementById("withdrawId").value;
+            const withdraw1=parseFloat(withdrawId);
+
+            const currentWithdraw=document.getElementById("currentWithdraw").innerText;
+            const withdraw2=parseFloat(currentWithdraw);
+            const totalWithdraw=withdraw1+withdraw2;
+            document.getElementById("currentWithdraw").innerText=totalWithdraw;
+            document.getElementById("withdrawId").value="";
+            //balance
+            const totalWithdrawBalance=document.getElementById("totalBalance").innerText;
+            const withdrawbalance=parseFloat(totalWithdrawBalance);
+            const withdrawtotal=withdrawbalance-withdraw1;
+            document.getElementById("totalBalance").innerText=withdrawtotal;
+            }
+            else{
+                alert("fuck you");
+            }
+        })
+        function updateSpantext(id , parseValue1){
+            const currentDeposit=document.getElementById(id).innerText;
+            const parseValue2=parseFloat(currentDeposit);
+            const totalDeposit=parseValue1+parseValue2;
+            document.getElementById(id).innerText=totalDeposit;
+        }
+
+    </script>
+</body>
+</html>
